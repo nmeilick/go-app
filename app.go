@@ -2,6 +2,7 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -60,7 +61,6 @@ func GetExecutable() string {
 }
 
 // GetProperties returns info about the running application.
-//
 func GetProperties() (*Properties, error) {
 	p := Properties{
 		Executable: GetExecutable(),
@@ -84,4 +84,15 @@ func GetProperties() (*Properties, error) {
 		}
 	}
 	return &p, nil
+}
+
+// RequireProperties returns info about the running application or
+// exits with an error if attributes could not be aquired.
+func RequireProperties() *Properties {
+	p, err := GetProperties()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Fatal: Detecting application properties failed: %s\n", err)
+		os.Exit(1)
+	}
+	return p
 }
