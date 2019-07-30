@@ -16,6 +16,21 @@ type Properties struct {
 	Executable string
 	Dir        string
 	Name       string
+
+	Description string
+	Version     string
+}
+
+// NewProperties returns a pointer to a freshly initialized Properties structure.
+func NewProperties() *Properties {
+	return &Properties{
+		Executable: "",
+		Dir:        "",
+		Name:       "",
+
+		Description: "no description",
+		Version:     "0.0.0",
+	}
 }
 
 // isFile returns true if the given path points to an existing file.
