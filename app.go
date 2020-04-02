@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -110,4 +111,11 @@ func RequireProperties() *Properties {
 		os.Exit(1)
 	}
 	return p
+}
+
+var reBadEnvChar = regexp.MustCompile(`[^A-Z0-9_]`)
+
+func (p *Properties) EnvName() string {
+	name := reBadEnvChar.ReplaceAllString(strings.ToUpper(p.Name), "_")
+	return strings.Trim(name, "_")
 }
